@@ -1,0 +1,95 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define SIZE 10
+
+typedef struct {
+    int A[SIZE]; 
+    int Top;
+} STACK;
+
+STACK S;
+
+void initstack();
+void push(int Num);
+int pop();
+int peek();
+void display();
+
+int main() {
+    int choice, value;
+    initstack();
+
+    while (1) {
+        printf("\nSTACK MENU:\n");
+        printf("1. Push\n2. Pop\n3. Peek\n4. Display\n5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter value to push: ");
+                scanf("%d", &value);
+                push(value);
+                break;
+            case 2:
+                value = pop();
+                if (value != -1) printf("Popped element: %d\n", value);
+                break;
+            case 3:
+                value = peek();
+                if (value != -1) printf("Peek element: %d\n", value);
+                break;
+            case 4:
+                display();
+                break;
+            case 5:
+                printf("Exiting program...\n");
+                exit(0);
+            default:
+                printf("Invalid choice! Please enter a valid option.\n");
+        }
+    }
+    return 0;
+}
+
+void initstack() {
+    S.Top = -1;
+}
+
+void push(int Num) {
+    if (S.Top == SIZE - 1) {
+        printf("Stack is full\n");
+        return;
+    }
+    S.A[++S.Top] = Num;
+    printf("%d pushed into stack\n", Num);
+}
+
+int pop() {
+    if (S.Top == -1) {
+        printf("Stack is empty\n");
+        return -1;
+    }
+    return S.A[S.Top--];
+}
+
+int peek() {
+    if (S.Top == -1) {
+        printf("Stack is empty\n");
+        return -1;
+    }
+    return S.A[S.Top];
+}
+
+void display() {
+    if (S.Top == -1) {
+        printf("Stack is empty\n");
+        return;
+    }
+    printf("Stack elements: ");
+    for (int i = S.Top; i >= 0; i--) {
+        printf("%d ", S.A[i]);
+    }
+    printf("\n");
+}
